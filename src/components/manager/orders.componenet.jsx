@@ -24,6 +24,7 @@ export const Orders = () => {
        
         console.log("id"+id);
         await deleteMeetingById(id);
+        setMeeting(meeting.filter(m=> m.id!=id));
         //deleteMeetingById(id);
         alert("הפגישה נמחקה בהצלחה!")
     }
