@@ -1,0 +1,102 @@
+#root {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+  direction: rtl;
+}
+body{
+  direction: rtl;
+}
+/* .logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+} */
+/* 
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+
+#container_nav {
+  height: 15vh;
+  width: auto;
+  background-color: rgb(212, 23, 91);
+  background: linear-gradient(to bottom, rgb(212, 23, 91) 80%, rgb(87,87,86) 60% 40%) ; 
+  margin: 0%;
+}
+#nav_ul{
+  display: flex;
+  flex-direction: row;
+  font: menu;
+  font-size: larger;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0%;
+   margin-left: 55%;
+}
+.LinkNav{
+  /* text-decoration: none; */
+  list-style-type: none;
+  /* margin-left: 5%; */
+  /* margin-right: 0%; */
+}
+.LinkNav> a{
+  color: white;
+  
+}
+#logo{ 
+  width: 35%;
+ margin-left: 85%;
+  
+}
+/* 
+nav>#navUp {
+  z-index: 1;
+  position: absolute;
+  position: fixed;
+  background-color: #e2dede;
+  width: 34.6cm;
+  height: 55px;
+  top: 0px;
+}
+
+nav>#navUp>a {
+  color: #89796e;
+  font-family: Fb Practica;
+}
+
+nav>#navUp>ul>li>a,
+#Divider {
+  color: #89796e;
+  font-weight: bolder;
+  font-size: 20px;
+  font-family: Fb Practica;
+} */
