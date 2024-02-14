@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { getServiceById } from "../../service/service.api.js";
 import { createMeeting } from "../../service/meeting.api.js";
+import { creatUser } from "../../service/user.api.js";
 
 
 
@@ -48,17 +49,17 @@ export const FormOrderMeeting = () => {
                         }
                 }
                 createMeeting(meeting);
-                if (data.customer) {
-                        const user = {
-                                "user": {
-                                        "username": data.name,
-                                        "password": "789",
-                                        "email": data.email,
-                                        "phone": data.phone
-                                }
-                        };
-                        creatUser(user);
-                }
+                // if (data.customer) {
+                //         const user = {
+                //                 "user": {
+                //                         "username": data.firstName+" "+data.lastName,
+                //                         "password": "789",
+                //                         "email": data.email,
+                //                         "phone": data.phone
+                //                 }
+                //         };
+                //         creatUser(user);
+                // }
                 form.reset();
                 alert( `${data.date}נפגש בשמחה ב` );
                 
