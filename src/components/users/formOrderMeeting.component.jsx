@@ -48,6 +48,17 @@ export const FormOrderMeeting = () => {
                         }
                 }
                 createMeeting(meeting);
+                if (data.customer) {
+                        const user = {
+                                "user": {
+                                        "username": data.name,
+                                        "password": "789",
+                                        "email": data.email,
+                                        "phone": data.phone
+                                }
+                        };
+                        creatUser(user);
+                }
                 form.reset();
                 alert( `${data.date}נפגש בשמחה ב` );
                 
@@ -99,6 +110,11 @@ export const FormOrderMeeting = () => {
                         <input type="number" name="duration"></input>
                         </label>
                        
+                </div>
+                <div>
+                        <label >האם אתה רוצה להיכנס לרשימת הלקוחות?
+                                <input type="checkbox" name="customer"></input>
+                        </label>
                 </div>
                 <button type="submit" >אישור ושליחה</button>
         </form>

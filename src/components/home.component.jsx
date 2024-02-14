@@ -54,8 +54,6 @@ export const Home = () => {
                 )
             }
         </Popup>
-
-
         <img src="../src/assets/images/חתוך3.jpg"
             width={'100%'}>
         </img>
