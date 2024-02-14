@@ -12,3 +12,7 @@ export const getMeeting= ()=>{
 export const deleteMeetingById=(id)=>{
     return axios.delete(`http://localhost:3000/meeting/${id}`);
 }
+//קבלת פגישה ע"י id
+export const getMeetingById=(id)=>{
+    return axios.get(`http://localhost:3000/meeting/${id}`);
+}
