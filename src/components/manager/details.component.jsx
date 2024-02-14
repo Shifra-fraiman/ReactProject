@@ -10,6 +10,7 @@ export const Details = () => {
     const [contact, setContact] = useState(false);
     const [sale, setSale] = useState(false);
     let business, business2;
+
     useEffect(() => {
         getBussines();
     }, []);
@@ -78,7 +79,7 @@ export const Details = () => {
                 setDataMyBusiness({ ...dataMyBusiness, sale: { "description": data.sale, "date": data.saleDateFrom + " - " + data.saleDateTo } });
                 console.log(dataMyBusiness);
                 //עדכון ה- Node
-                business = { ...dataMyBusiness, sale: { "description": data.sale, "date": data.saleDateFrom + " - " + data.saleDateTo } };
+                business = { ...dataMyBusiness, sale: { "description": data.sale, "dateFrom": data.saleDateFrom , "dateTo": data.saleDateTo } };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
                 updateMyBussines(business2);
@@ -135,7 +136,7 @@ export const Details = () => {
                 <button>לאישור</button>
             </form> : ''}
         <h4>מבצעים עכשויים</h4>
-        {(dataMyBusiness != undefined) ? (dataMyBusiness.sale != undefined) ? <p>{dataMyBusiness.sale.description}  | {dataMyBusiness.sale.date} <button onClick={() => setSale(!sale)}>לשינוי המבצע</button></p> : '' : ''}
+        {(dataMyBusiness != undefined) ? (dataMyBusiness.sale != undefined) ? <p>{dataMyBusiness.sale.description}  | {dataMyBusiness.sale.dateFrom} - {dataMyBusiness.sale.dateTo} <button onClick={() => setSale(!sale)}>לשינוי המבצע</button></p> : '' : ''}
         {sale ?
             <form action="" onSubmit={e => changeDataOfMyBusiness(e, "sale")}>
                 <label htmlFor="sale">כתוב כאן את המלל לשינוי</label>
