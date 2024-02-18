@@ -9,6 +9,7 @@ export const Details = () => {
     const [description, setDescription] = useState(false);
     const [contact, setContact] = useState(false);
     const [sale, setSale] = useState(false);
+    let [descriptionInOneSentece, setDescriptionInOneSentece]= useState(null);
     let business, business2;
 
     useEffect(() => {
@@ -17,6 +18,7 @@ export const Details = () => {
 
     const getBussines = async () => {
         const myBussines = await getMyBussines();
+        setDescriptionInOneSentece(myBussines.data.description);
         let sentece = (JSON.stringify(myBussines.data.description)).slice(1, -1);
         console.log("sentece: " + sentece);
         let s = divideStringByPoint(sentece);
@@ -27,6 +29,8 @@ export const Details = () => {
     const divideStringByPoint = (sentece) => {
         return (JSON.stringify(sentece)).slice(1, -1).split('.');
     }
+
+    
 
     const changeDataOfMyBusiness = (e, type) => {
         e.preventDefault();
@@ -43,9 +47,8 @@ export const Details = () => {
                 business = { ...dataMyBusiness, description: JSON.stringify(data.text) };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
-                updateMyBussines(business2);
-                //איפוס הטופס
-                form.reset();
+                //updateMyBussines(business2);
+                //סגירת הטופס
                 setDescription(!description);
                 break;
             case "address":
@@ -53,38 +56,35 @@ export const Details = () => {
                 setDataMyBusiness({ ...dataMyBusiness, address: data.address });
                 console.log(dataMyBusiness);
                 //עדכון ה- Node
-                business = { ...dataMyBusiness, address: data.address };
+                business = { ...dataMyBusiness, address: data.address, description: descriptionInOneSentece };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
-                updateMyBussines(business2);
-                //איפוס הטופס
-                form.reset();
+
+                //סגירת הטופס
                 setAddress(!address);
                 break;
             case "contact":
                 //עדכון ה - useState
-                setDataMyBusiness({ ...dataMyBusiness, contact: { "mail":data.mail, "phone":data.phone, "website":data.website } });
+                setDataMyBusiness({ ...dataMyBusiness, contact: { "mail": data.mail, "phone": data.phone, "website": data.website } });
                 console.log(dataMyBusiness);
                 //עדכון ה- Node
-                business = { ...dataMyBusiness,contact: { "mail":data.mail, "phone":data.phone, "website":data.website } };
+                business = { ...dataMyBusiness, contact: { "mail": data.mail, "phone": data.phone, "website": data.website }, description: descriptionInOneSentece };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
-                updateMyBussines(business2);
-                //איפוס הטופס
-                form.reset();
+                //updateMyBussines(business2);
+                //סגירת הטופס
                 setContact(!contact);
                 break;
             case "sale":
                 //עדכון ה - useState
-                setDataMyBusiness({ ...dataMyBusiness, sale: { "description": data.sale, "date": data.saleDateFrom + " - " + data.saleDateTo } });
+                setDataMyBusiness({ ...dataMyBusiness, sale: { "description": data.sale, "dateFrom": data.saleDateFrom ,"dateTo": data.saleDateTo } });
                 console.log(dataMyBusiness);
                 //עדכון ה- Node
-                business = { ...dataMyBusiness, sale: { "description": data.sale, "dateFrom": data.saleDateFrom , "dateTo": data.saleDateTo } };
+                business = { ...dataMyBusiness, sale: { "description": data.sale, "dateFrom": data.saleDateFrom, "dateTo": data.saleDateTo }, description: descriptionInOneSentece };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
-                updateMyBussines(business2);
-                //איפוס הטופס
-                form.reset();
+                //updateMyBussines(business2);
+                //סגירת הטופס
                 setSale(!sale);
                 break;
 
@@ -92,6 +92,8 @@ export const Details = () => {
             default:
                 break;
         }
+        updateMyBussines(business2);
+        form.reset();
     }
 
 
@@ -142,9 +144,10 @@ export const Details = () => {
                 <label htmlFor="sale">כתוב כאן את המלל לשינוי</label>
                 <br />
                 <textarea name="sale" id="" cols="30" rows="3"></textarea>
-                <label htmlFor="saleDate">מתאריך ועד תאריך?</label>
-                <br />
+                <label htmlFor="saleDateFrom">מתאריך?</label>
                 <input type="date" name="saleDateFrom" />
+                <br />
+                <label htmlFor="saleDateTo">עד תאריך:</label>
                 <input type="date" name="saleDateTo" />
                 <button>לאישור</button>
             </form> : ''}

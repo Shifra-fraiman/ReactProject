@@ -45,7 +45,6 @@ export const updateServiceById = (id,service) => {
     //     }}
     // );
     return axios.put(`http://localhost:3000/service/${id}`,service);
-
 }
 
 export const deleteServiceById=(id)=>{
