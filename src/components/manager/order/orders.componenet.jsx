@@ -1,61 +1,89 @@
 import React, { useState, useEffect } from "react";
-import { getMeeting, deleteMeetingById } from "../../service/meeting.api";
+import { getMeeting, deleteMeetingById, getMeetingById, createMeeting } from "../../../service/meeting.api";
 import { useNavigate } from 'react-router-dom';
-import { getMeetingById } from "../../service/meeting.api";
+import { useOrders } from "./order.context";
 
 
 export const Orders = () => {
-    let [meetings, setMeetings] = useState(null);
+    // let [meetings, setMeetings] = useState(null);
     let [formUpdateMeeting, setFormUpdateMeetring] = useState(false);
-    let [meetingId, setMeetingId]= useState(null);
+    let [meetingId, setMeetingId] = useState(null);
     let id = null;
     const navigate = useNavigate();
 
-    const getAllMeeting = async () => {
-        const services = await getMeeting();
-        const { data } = services;
-        console.log(data);
-        setMeetings(data);
-    }
+    const { orders, dispatch, loadOrders } = useOrders();
 
-    useEffect(() => {
-        console.log("in .............");
-        getAllMeeting();
-    }, [], [id]);
+    // const getAllMeeting = async () => {
+    //     const services = await getMeeting();
+    //     const { data } = services;
+    //     console.log(data);
+    //     setMeetings(data);
+    // }
+
+    // useEffect(() => {
+    //     console.log("in .............");
+    //     getAllMeeting();
+    // }, [], [id]);
 
     const deleteOrder = async (e) => {
         e.preventDefault();
-        id = e.target.id;
+        // id = e.target.id;
 
-        console.log("id" + id);
-        await deleteMeetingById(id);
-        setMeetings(meetings.filter(m => m.id != id));
+        // console.log("id" + id);
+        await deleteMeetingById(e.target.id);
+        await loadOrders();
         //deleteMeetingById(id);
-        alert("הפגישה נמחקה בהצלחה!")
+        alert("הפגישה נמחקה בהצלחה!");
     }
+
     const addMeeting = () => {
-        navigate('/meeting');
-    }
-    const updateMeeting = () => {
+        // navigate('/meeting');
 
     }
-    const updateMeetingBtn=async(e)=>{
+
+    const updateMeeting = async (e) => {
         e.preventDefault();
-        id= e.target.id;
-        let { data }=await getMeetingById();
-        setMeetingId(data);
+        const form = e.target;
+        const data = Object.fromEntries([...(new FormData(form)).entries()]);
+        const meeting = {
+            business_id: "8f571327-fd44-4f0f-b0f9-950082e0ced3",
+            start_time: data.time,
+            duration: data.duration,
+            meeting: {
+                type: service.name,
+                date: data.date,
+                place: data.place,
+                customerDetails: {
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    phone: data.phone
+                }
+            }
+        }
+        await createMeeting(meeting);
+        await loadOrders();
+        form.reset();
+    }
+
+
+    const updateMeetingBtn = (meeting) => {
+        // e.preventDefault();
+        // id = e.target.id;
+        // let { data } = await getMeetingById();
+        setMeetingId(meeting);
         setFormUpdateMeetring(!formUpdateMeeting);
+
     }
 
     return (<div width={'100%'}>
-        {meetings ? <div>{meetings.map(m => <li key={m.id} id={m.id}>{m.type},{m.startTime},  {m.customerDetails.firstName} {m.customerDetails.lastName}
+        {orders ? <div>{orders.map(m => <li key={m.id} id={m.id}>{m.type},{m.startTime},  {m.customerDetails.firstName} {m.customerDetails.lastName}
             <button key={m.id} id={m.id} onClick={(e) => deleteOrder(e)}>❌</button>
-            <button id={m.id} onClick={e=> updateMeetingBtn(e)}>עדכון</button>
+            <button id={m.id} onClick={() => updateMeetingBtn(m)}>עדכון</button>
         </li>)}</div> : <h1 color="black" >hello world </h1>}
         <button onClick={e => addMeeting()}>להוספת פגישה</button>
-        {formUpdateMeeting? <form name="orderMeeting" onSubmit={e => updateMeeting(e)}>
+        {/* {formUpdateMeeting ? <form name="orderMeeting" onSubmit={e => updateMeeting(e)}>
             <div>
-                <img src="src/assets/images/newBorn.JPG" /*src="{service? service.img :''}*/></img>
+                <img src="src/assets/images/newBorn.JPG" /*src="{service? service.img :''}></img>
             </div>
             <div>
                 <label >שם פרטי
@@ -102,7 +130,7 @@ export const Orders = () => {
                 </label>
             </div>
             <button type="submit" >אישור ושליחה</button>
-        </form> :''}
+        </form> : ''} */}
 
 
     </div>)
