@@ -15,23 +15,6 @@ export const Service = () => {
     const { services, dispatch, loadServices } = useServices();
 
 
-    // const getAllServices = async () => {
-    //     const services = await getServiceses();
-    //     const { data } = services;
-    //     setDataService(data);
-    // }
-
-    // useEffect(() => {
-    //     // loadServices();
-    //     getAllServices();
-    // }, [], [setDataService]);
-
-    // useEffect(() => {
-    //     setBtnUpdateService(!BtnUpdateService);
-    // }, [service]);
-
-
-
 
     //להצגת התמונה אחרי העלאה
     const [file, setFile] = useState();
@@ -58,15 +41,7 @@ export const Service = () => {
         await createService(service);
         form.reset();
         setBtnAddService(false);
-        // service = {
-        //     "business_id": "8f571327-fd44-4f0f-b0f9-950082e0ced3",
-        //     "name": data.name,
-        //     "img": "../../assets/images/service/" + data.img.name,
-        //     "cost": data.cost,
-        //     "duration": data.duration
-
-        // }
-        // addToDataService(dataService, service);
+       
         await loadServices();
     }
 
@@ -84,7 +59,6 @@ export const Service = () => {
         }
         setBtnUpdateService(true);
 
-        // console.log(data);
     }
 
     const updateService = async (e) => {
@@ -109,23 +83,9 @@ export const Service = () => {
         await updateServiceById(service.id, newService);
         await loadServices();
 
-        // newService = {
-        //     "img": "../../assets/images/service/" + data.img.name,
-        //     "cost": data.cost,
-        //     "duration": data.duration,
-        //     "id": service.id,
-        //     "name": data.name,
-        //     "businessId": "8f571327-fd44-4f0f-b0f9-950082e0ced3"
-        // }
-        // let newServices = dataService.filter(s => (s.id != service.id));
-        // addToDataService(newServices, newService)
+        
     }
-    //הוספת אובייקט שירות לשירותים ב state
-    // const addToDataService = (services, newService) => {
-    //     services.push(newService);
-    //     setDataService(services);
-    // }
-
+    
     const deleteService = async (service) => {
         await deleteServiceById(service.id);
         await loadServices();
@@ -135,11 +95,7 @@ export const Service = () => {
 
 
     return <div>
-        {/* <useServices></useServices> */}
-        {/* <ul>
-            {(services === undefined) ? '' : services.map(s => <li key={s.id}>{s.name}</li>)}
-        </ul>
-         */}
+      
         {services ? <div>{services.map(service => <li key={service.id}> {service.name}
             <img src={service.img == "chalake" ? chalake : newBorn} width={'20%'}></img>
             <button type="button" key={service.id} id={service.id} onClick={(e) => { getErviceId(e); }}>עידכון</button>
@@ -173,34 +129,6 @@ export const Service = () => {
             </form>
             </div> : ''
         }
-        {
-            // BtnUpdateService ? <div><form name="orderMeeting" onClick={e => updateService(e)}/*onSubmit={e => updateService(e.target)}*/>
-            //     <div>
-            //         <label >שם השירות:
-            //             <input type="text" defaultValue={(service != null) ? service.name : ''} name="name"></input></label>
-
-            //     </div>
-            //     <div>
-            //         <label >משך זמן:
-            //             <input type="text" defaultValue={(service != null) ? service.duration : ''} name="duration"></input></label>
-
-            //     </div>
-            //     <div>
-            //         <label >מחיר:
-            //             <input type="text" defaultValue={(service != null) ? service.cost : ''} name="cost"></input></label>
-
-            //     </div>
-            //     <div>
-            //         <label >קישור לתמונה:
-            //             <input type="file" accept="image/*" defaultValue={(service != null) ? service.image : ''} onChange={handleChange} name="img"></input></label>
-            //         <img src={file} width={'20%'} />
-
-            //     </div>
-            //     <button type="button" >אישור ושליחה</button>
-            // </form>
-            // </div>,
-            
-                // : ''
-        }
+        
     </div>
 }

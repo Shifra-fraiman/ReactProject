@@ -16,3 +16,7 @@ export const deleteMeetingById=(id)=>{
 export const getMeetingById=(id)=>{
     return axios.get(`http://localhost:3000/meeting/${id}`);
 }
+//עידכון פגישה מקבל id ו-אובייקט לשינוי
+export const updateMeetingById = (id,meeting) => {
+    return axios.put(`http://localhost:3000/meeting/${id}`,meeting);
+}

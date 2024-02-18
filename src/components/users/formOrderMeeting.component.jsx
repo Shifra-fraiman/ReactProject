@@ -3,14 +3,17 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { getServiceById } from "../../service/service.api.js";
 import { createMeeting } from "../../service/meeting.api.js";
-import { creatUser } from "../../service/user.api.js";
+
 
 
 
 export const FormOrderMeeting = () => {
         let { id } = useParams();
         let [service, setService] = useState(null);
-        const navigate= useNavigate();
+        const [password, setPassword] = useState('');
+
+
+        const navigate = useNavigate();
 
         //     let { nameMeeting }=props;
         //     let { imgMeeting }=props;
@@ -28,6 +31,21 @@ export const FormOrderMeeting = () => {
                 getService();
         }, []);
 
+        const generatePassword = () => {
+                let charset = "";
+                let newPassword = "";
+
+                charset += "!@#$%^&*()";
+                charset += "0123456789";
+                charset += "abcdefghijklmnopqrstuvwxyz";
+                charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+                for (let i = 0; i < 12; i++) {
+                        newPassword += charset.charAt(Math.floor(Math.random() * charset.length));
+                }
+
+                setPassword(newPassword);
+        }
 
         const order = (event) => {
                 event.preventDefault();
@@ -49,68 +67,74 @@ export const FormOrderMeeting = () => {
                         }
                 }
                 createMeeting(meeting);
-                // if (data.customer) {
-                //         const user = {
-                //                 "user": {
-                //                         "username": data.firstName+" "+data.lastName,
-                //                         "password": "789",
-                //                         "email": data.email,
-                //                         "phone": data.phone
-                //                 }
-                //         };
-                //         creatUser(user);
-                // }
+                if (data.customer) {
+                        generatePassword();
+                        console.log(`password`);
+                        console.log(password);
+
+                        // const user = {
+                        //         "user": {
+                        //                 "username": data.firstName+" "+data.lastName,
+                        //                 "password": "789",
+                        //                 "email": data.email,
+                        //                 "phone": data.phone
+                        //         }
+                        // };
+                        // creatUser(user);
+                }
                 form.reset();
-                alert( `${data.date}נפגש בשמחה ב` );
-                
-                
-                navigate("/");  
-                 
+                alert(`${data.date}נפגש בשמחה ב`);
+
+
+                navigate("/");
+
         }
+
+
 
 
         return <form name="orderMeeting" onSubmit={e => order(e)}>
                 <div>
-                        <img src="src/assets/images/newBorn.JPG" /*src="{service? service.img :''}*/></img>
+                        <img src={service? service.img : 'src/assets/images/logo1.jpg' } ></img>
                 </div>
                 <div>
-                        <label >שם פרטי
-                        <input type="text" name="firstName"></input></label>
-                       
+                        <label >שם פרטי:
+                                <input type="text" name="firstName"></input></label>
+
                 </div>
                 <div>
-                        <label >שם משפחה
-                        <input type="text" name="lastName"></input></label>
-                     
+                        <label >שם משפחה:
+                                <input type="text" name="lastName"></input></label>
+
                 </div>
                 <div>
-                        <label >טלפון
-                        <input type="tel" name="phone"></input></label>
-                       
+                        <label >טלפון:
+                                <input type="tel" name="phone"></input></label>
+
                 </div>
                 <div>
-                        <label >מיקום
-                        <input type="text" name="place"></input>
+                        <label >מיקום:
+                                <input type="text" name="place"></input>
                         </label>
-                       
+
                 </div>
                 <div>
-                        <label>בחר תאריך 
-                        <input type="date" name="date"></input>
+                        <label>בחר תאריך:
+                                <input type="date" name="date"></input>
                         </label>
-                       
+
                 </div>
                 <div>
-                        <label >בחר שעת התחלה
-                        <input type="time" name="time"></input>
+                        <label >בחר שעת התחלה:
+                                <input type="time" name="time"></input>
                         </label>
-                        
+
                 </div>
                 <div>
-                        <label >משך זמן - בשעות
-                        <input type="number" name="duration"></input>
+                        <label >משך זמן - בשעות:
+                                <input type="number" name="duration"></input>
                         </label>
-                       
+
                 </div>
                 <div>
                         <label >האם אתה רוצה להיכנס לרשימת הלקוחות?
