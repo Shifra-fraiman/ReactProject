@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import './nav-manager.css'
+import './nav-manager.css';
+import { ServicesProvider } from "./service.context";
 
 export const Nav=()=>{
     return <div>
@@ -14,7 +15,10 @@ export const Nav=()=>{
             </ul>
         </nav>
         <div>
-            <Outlet/>
+            <ServicesProvider>
+                <Outlet/>
+            </ServicesProvider>
+           
         </div>
     </div>
 }
