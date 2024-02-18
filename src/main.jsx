@@ -8,8 +8,8 @@ import { FormOrderMeeting } from './components/users/formOrderMeeting.component.
 import { About } from './components/users/about.component.jsx'
 import { Admin } from './components/manager/admin.component.jsx'
 import { Details } from './components/manager/details.component.jsx'
-import { Service } from './components/manager/service.component.jsx'
-import { Orders } from './components/manager/orders.componenet.jsx'
+import { Service } from './components/manager/service/Service.component.jsx'
+import { Orders } from './components/manager/order/orders.componenet.jsx'
 import { Customers } from './components/manager/customers.component.jsx'
 
 import {

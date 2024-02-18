@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useContext } from 'react';
-import { serviceReducer } from '../manager/service/service.reducer.js'
-import { getServiceses} from "../../service/service.api.js";
+import { serviceReducer } from './service.reducer.js'
+import { getServiceses} from "../../../service/service.api.js";
 import { Navigate, useNavigate } from 'react-router-dom';
 
 

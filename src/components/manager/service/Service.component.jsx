@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useReducer } from "react";
-import { getServiceses, getServiceById, updateServiceById, createService } from "../../service/service.api.js";
-import { deleteServiceById } from "../../service/service.api.js";
-import chalake from '../../assets/images/service/chalake.jpg';
-import newBorn from '../../assets/images/service/newBorn.jpg';
+import { getServiceses, getServiceById, updateServiceById, createService, deleteServiceById } from "../../../service/service.api.js";
+import chalake from '../../../assets/images/service/chalake.jpg';
+import newBorn from '../../../assets/images/service/newBorn.jpg';
 // import { serviceReducer } from "./service/service.reducer.js";
 import { useServices } from './service.context.jsx';
 

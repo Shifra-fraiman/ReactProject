@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 import { Enter } from "./enter.component";
-import { Nav } from "./nav-manger.component";
+import { Nav } from "./nav/nav-manger.component";
 
 export const Admin=()=>{
     const [showNav, setshowNav]= useState(false);

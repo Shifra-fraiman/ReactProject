@@ -1,9 +1,10 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import './nav-manager.css';
-import { ServicesProvider } from "./service.context";
+import { ServicesProvider } from "../service/service.context";
+import { OrdersProvider } from "../order/order.context"
 
-export const Nav=()=>{
+export const Nav = () => {
     return <div>
         <h1>Nav</h1>
         <nav>
@@ -15,10 +16,12 @@ export const Nav=()=>{
             </ul>
         </nav>
         <div>
-            <ServicesProvider>
-                <Outlet/>
-            </ServicesProvider>
-           
+            <OrdersProvider>
+                <ServicesProvider>
+                    <Outlet />
+                </ServicesProvider>
+            </OrdersProvider>
+
         </div>
     </div>
 }
