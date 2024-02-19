@@ -22,7 +22,7 @@ export const Meeting=()=>{
 
     return (<div width={'100%'}> 
         
-        {dataService? <div>{dataService.map(service=> <li key={service.id} id= {service.id}> <Link to={"/meeting/form/"+service.id} >{service.name} <img src="src/assets/images/newBorn.JPG" width={'20%'}></img></Link> </li>)}</div> : <h1 color="black" >hello world </h1>}
+        {dataService? <div>{dataService.map(service=> <li key={service.id} id= {service.id}> <Link to={"/meeting/form/"+service.id} >{service.name} <img src={service.img} width={'20%'}></img></Link> </li>)}</div> : <h1 color="black" >hello world </h1>}
         <div>
             <Outlet />
       </div>

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getMeeting, deleteMeetingById, getMeetingById, createMeeting, } from "../../../service/meeting.api";
 import { useNavigate } from 'react-router-dom';
 import { useOrders } from "./order.context";
-import { OrderForm  } from './orderForm.component';
- 
+import { OrderForm } from './orderForm.component';
+
 
 
 export const Orders = () => {
@@ -12,6 +12,7 @@ export const Orders = () => {
     let [meetingId, setMeetingId] = useState(null);
     let id = null;
     const navigate = useNavigate();
+    const [sort, setSort] = useState("");
 
     const { orders, dispatch, loadOrders } = useOrders();
 
@@ -23,9 +24,8 @@ export const Orders = () => {
     // }
 
     // useEffect(() => {
-    //     console.log("in .............");
-    //     getAllMeeting();
-    // }, [], [id]);
+        
+    // }, [orders]);
 
     const deleteOrder = async (e) => {
         e.preventDefault();
@@ -93,6 +93,29 @@ export const Orders = () => {
         setFormUpdateMeetring(!formUpdateMeeting);
     }
 
+    const sortOrders = async (type) => {
+        console.log("hello ");
+        switch (type) {
+            case "name":
+                await dispatch({
+                    type: 'sortByCustomerName',
+                })
+                console.log("hello 2");
+                console.log(orders);
+                orders.map(m => console.log(m.lastName));
+                break;
+            case "date":
+                await dispatch({
+                    type: 'sortByDate',
+                })
+                console.log(orders);
+                break;
+
+            default:
+                break;
+        }
+    }
+
     return (
         <div width={'100%'}>
             {orders ? <div>{orders.map(m => <li key={m.id} id={m.id}>{m.type},{m.startTime},  {m.customerDetails.firstName} {m.customerDetails.lastName}
@@ -101,5 +124,10 @@ export const Orders = () => {
             </li>)}</div> : <h1 color="black" >hello world </h1>}
             <button onClick={e => updateOrAddMeetingBtn(null)}>להוספת פגישה</button>
             {formUpdateMeeting ? <OrderForm objUpdate={meetingId} updateMeeting={updateMeeting} addMeeting={addMeeting} /> : ''}
+            <select onChange={(e) => { setSort(e.target.value); sortOrders(e.target.value) }}>מיון
+            <option value="normal" >רגיל </option>
+                <option value="name" >שם הלקוח</option>
+                <option value="date">תאריך</option>
+            </select>
         </div>)
 }
