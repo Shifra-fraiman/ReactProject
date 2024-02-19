@@ -12,6 +12,7 @@ export const Orders = () => {
     let [meetingId, setMeetingId] = useState(null);
     let id = null;
     const navigate = useNavigate();
+    const [sort, setSort] = useState("");
 
     const { orders, dispatch, loadOrders } = useOrders();
 
@@ -92,17 +93,22 @@ export const Orders = () => {
         setFormUpdateMeetring(!formUpdateMeeting);
     }
 
-    const sortOrders = (type) => {
+    const sortOrders = async (type) => {
+        console.log("hello ");
         switch (type) {
             case "name":
-                dispatch({
+                await dispatch({
                     type: 'sortByCustomerName',
                 })
+                console.log("hello 2");
+                console.log(orders);
+                orders.map(m => console.log(m.lastName));
                 break;
             case "date":
-                dispatch({
+                await dispatch({
                     type: 'sortByDate',
                 })
+                console.log(orders);
                 break;
 
             default:
@@ -118,7 +124,7 @@ export const Orders = () => {
             </li>)}</div> : <h1 color="black" >hello world </h1>}
             <button onClick={e => updateOrAddMeetingBtn(null)}>להוספת פגישה</button>
             {formUpdateMeeting ? <OrderForm objUpdate={meetingId} updateMeeting={updateMeeting} addMeeting={addMeeting} /> : ''}
-            <select onChange={(e) => sortOrders(e.target.value)}>מיון
+            <select onChange={(e) => { setSort(e.target.value); sortOrders(e.target.value) }}>מיון
             <option value="normal" >רגיל </option>
                 <option value="name" >שם הלקוח</option>
                 <option value="date">תאריך</option>

@@ -4,7 +4,7 @@ import axios from "axios";
 export const getUserByUserId= (userId)=>{
     return axios.get(`http://localhost:3000/user/${userId}`);
 }
-export const creatUser = (user)=>{
+export const createUser = (user)=>{
     return axios.post(`http://localhost:3000/user`,user);
     // {  "user": {
     //     "username": "lll",
@@ -14,4 +14,7 @@ export const creatUser = (user)=>{
     //     "phone": "052-7620477"
         
     // }}
+}
+export const getUsers= ()=>{
+    return axios.get(`http://localhost:3000/user`);
 }

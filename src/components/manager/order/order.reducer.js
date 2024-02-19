@@ -3,23 +3,35 @@ export const ordersReducer = (orders, action) => {
 
     switch (type) {
         case 'load': {
+            console.log("load!!");
             return action.value;
         }
         case 'sortByDate':
             return orders.sort((a, b) => {
-                return Date.parse(a.date).localeCompare(Date.parse(b.date));
+                console.log("a: "+a);
+                return (a.date).localeCompare(b.date);
             });
-        case 'sortByCustomerName':{
-            // const collator = new Intl.Collator(selected, { sensitivity: "base" });
+        case 'sortByCustomerName': {
             return orders.sort((a, b) => {
-                console.log("a: "+a+" b: "+b);
-                console.log("a: "+a.customerDetails.lastName+" b: "+b.customerDetails.lastName);
-                // const result = a?.firstName.localeCompare(b?.firstName);
-                return /*result !== 0 ? result :*/(a!=undefined && b!=undefined)? (a.customerDetails.lastName!=undefined && b.customerDetails.lastName!=undefined)? (String.fromCharCode(a.customerDetails.lastName.a)).localeCompare(String.fromCharCode(b.customerDetails.lastName)): orders: orders;
-            });
-            break;
+                let aLastName, bLastName, aFirstName, bFirstName, resultLastName, resultFirstName;
+                if (a && b && a.customerDetails.lastName && b.customerDetails.lastName) {
+                    console.log("lastName");
+                    aLastName = a.customerDetails.lastName;
+                    bLastName = b.customerDetails.lastName;
+                    resultLastName = aLastName.localeCompare(bLastName);
+                }
+
+                if (a && b && a.customerDetails.firstName && b.customerDetails.firstName) {
+                    console.log("firstName");
+                    aFirstName = a.customerDetails.firstName;
+                    bFirstName = b.customerDetails.firstName;
+                    resultFirstName = aFirstName.localeCompare(bFirstName)
+                }
+
+                return resultLastName !== 0 ? resultLastName : resultFirstName;
+            })
         }
         default:
-            return orders;
+            break;
     }
 }

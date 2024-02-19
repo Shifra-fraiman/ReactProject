@@ -45,9 +45,10 @@ export const FormOrderMeeting = () => {
                 }
 
                 setPassword(newPassword);
+                return newPassword;
         }
 
-        const order = (event) => {
+        const order = async(event) => {
                 event.preventDefault();
                 const form = event.target;
                 const data = Object.fromEntries([...(new FormData(form)).entries()]);
@@ -68,19 +69,28 @@ export const FormOrderMeeting = () => {
                 }
                 createMeeting(meeting);
                 if (data.customer) {
-                        generatePassword();
+                        let myPas = generatePassword();
                         console.log(`password`);
                         console.log(password);
+                        console.log(myPas);
+                        const user = {
+                                "user": {
+                                        "username": data.firstName + " " + data.lastName,
+                                        "password": myPas,
+                                        "email": data.email,
+                                        "phone": data.phone
+                                }
+                        };
+                        const allUsers = await getUsers();
+                        const allUsersData = allUsers.data;
+                        console.log(allUsers);
+                        const sameUser = allUsersData.filter(user => user.username === data.firstName + " " + data.lastName && user.phone === data.phone);
+                        if (sameUser[0] == null)
+                                createUser(user);
+                        else {
+                                alert("הינך לקוח הקיים במערכת")
+                        }
 
-                        // const user = {
-                        //         "user": {
-                        //                 "username": data.firstName+" "+data.lastName,
-                        //                 "password": "789",
-                        //                 "email": data.email,
-                        //                 "phone": data.phone
-                        //         }
-                        // };
-                        // creatUser(user);
                 }
                 form.reset();
                 alert(`${data.date}נפגש בשמחה ב`);
