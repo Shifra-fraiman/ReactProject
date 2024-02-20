@@ -16,6 +16,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
+import { getUsers, createUser } from "../../service/user.api.js";
 
 
 
@@ -27,6 +28,7 @@ export const FormOrderMeeting = () => {
         let [service, setService] = useState(null);
         const [password, setPassword] = useState('');
         let [allServices, setAllServices] = useState('');
+        let [date, setDate] = useState(new Date());
 
 
         const navigate = useNavigate();
@@ -72,6 +74,10 @@ export const FormOrderMeeting = () => {
                 event.preventDefault();
                 const form = event.target;
                 const data = Object.fromEntries([...(new FormData(form)).entries()]);
+                // let d= new Date(data.date);
+                // console.log(d.toString());
+                // console.log("getMonth: "+data.date.day);
+                // console.log(d.getDay);
                 const meeting = {
                         business_id: "8f571327-fd44-4f0f-b0f9-950082e0ced3",
                         start_time: data.time,
@@ -87,6 +93,7 @@ export const FormOrderMeeting = () => {
                                 }
                         }
                 }
+                console.log(meeting);
                 createMeeting(meeting);
                 if (data.customer) {
                         let myPas = generatePassword();
@@ -121,58 +128,39 @@ export const FormOrderMeeting = () => {
         }
 
 
-        const theme = {
-                spacing: 8,
-        }
+        // const theme = {
+        //         spacing: 8,
+        // }
 
         return <>
                 <form name="orderMeeting" onSubmit={e => order(e)}>
-                        <Box sx={{ mx: 'auto' }}>
-                                <Autocomplete
-                                        disablePortal
-                                        id="combo-box-demo"
-                                        options={allServices ? allServices.map(s => s.name) : ''}
-                                        sx={{ mx: 'auto', width: 200, mt: 2, mb: 2 }}
-                                        renderInput={(params) => <TextField {...params} label={service ? service.name : ''} />}
-                                />
-                        </Box>
+                        <h2 >מלא את טופס הזמנת {service ? service.name : ''}</h2>
+                        <TextField id="outlined-basic" label="שם פרטי" name="firstName" variant="outlined" sx={{ m: '1%', mx: 'auto' }} />
                         <br />
+                        <TextField id="outlined-basic" label="שם משפחה" name="lastName" variant="outlined" sx={{ m: '1%' }} />
                         <br />
-                        {/* <Box sx={{ borderColor: 'Primary.main' }}> */}
-                        <TextField id="outlined-basic" label="שם פרטי" name="firstName" variant="outlined" margin="2px" />
+                        <TextField id="outlined-basic" label="טלפון" variant="outlined" type="tel" name="phone" sx={{ m: '1%' }} />
                         <br />
-                        <br />
-                        <TextField id="outlined-basic" label="שם משפחה" name="lastName" variant="outlined" margin="2px" />
-                        <br />
-                        <br />
-                        <TextField id="outlined-basic" label="טלפון" variant="outlined" type="tel" name="phone" margin="2px" />
-                        <br />
-                        <br />
-                        <TextField id="outlined-basic" label="מיקום" name="place" variant="outlined" margin="2px" />
-                        {/* </Box> */}
-
-                        <Box sx={{ mx: 'auto', width: 200 }}>
+                        <TextField id="outlined-basic" label="מיקום" name="place" variant="outlined" sx={{ m: '1%' }} />
+                        <Box sx={{ mx: 'auto', width: 220 }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ m: -2 }}>
                                         <DemoItem label="בחר תאריך" sx={{ ml: '-20%' }} >
-                                                <DesktopDatePicker />
+                                                <DesktopDatePicker name="date" />
                                         </DemoItem>
                                 </LocalizationProvider>
                         </Box>
-                        <Box sx={{ mx: 'auto', width: 200 }}>
+                        <Box sx={{ mx: 'auto', width: 220 }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DemoContainer components={['TimePicker', 'DateTimePicker']}>
                                                 <DemoItem label="זמן (התחלה)">
-                                                        <TimePicker />
+                                                        <TimePicker name="time" />
                                                 </DemoItem>
 
                                         </DemoContainer>
                                 </LocalizationProvider>
                         </Box>
                         <br />
-                        <br />
-                        <TextField id="outlined-basic" label="משך זמן-בשעות" name="time" variant="outlined" margin="2px" />
-                        {/* <InputLabel shrink>Count</InputLabel> */}
-                      
+                        <TextField id="outlined-basic" name="duration" label="משך זמן-בשעות" variant="outlined" />
                         <div>
                                 <label >האם אתה רוצה להיכנס לרשימת הלקוחות?
                                         <input type="checkbox" name="customer"></input>

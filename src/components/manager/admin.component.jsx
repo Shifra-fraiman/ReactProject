@@ -11,9 +11,9 @@ export const Admin=()=>{
     }
     
     return <div>
-        {/* <h1>Admin</h1> */}
+     
         <div>
-            { showNav? <Nav/> : <Enter  setNavFunc= {setNavFunc}/> }
+            { showNav? <Nav /> : <Enter  setNavFunc= {setNavFunc}/> }
         </div>
     </div>
    

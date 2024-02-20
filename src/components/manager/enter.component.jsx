@@ -39,16 +39,17 @@ export const Enter = (props) => {
     }
 
     return <div>
+        <h1>נא הכנס שם משתמש וסיסמה:</h1>
         <form name="updateCustomer" onSubmit={e => identity(e)}>
             <div>
-                <label>name
+                <label>שם משתמש
                     <input type="text" name="name"></input></label>
             </div>
             <div>
-                <label>password
+                <label>סיסמה
                     <input type="text" name="password"></input></label>
             </div>
-            <button type="submit" >enter</button>
+            <button type="submit" >לכניסה</button>
         </form>
     </div>
 }

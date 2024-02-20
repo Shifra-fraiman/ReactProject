@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getMeeting, deleteMeetingById, getMeetingById, createMeeting, updateMeetingById} from "../../../service/meeting.api";
+import { getMeeting, deleteMeetingById, getMeetingById, createMeeting, updateMeetingById } from "../../../service/meeting.api";
 import { useNavigate } from 'react-router-dom';
 import { useOrders } from "./order.context";
 import { OrderForm } from './orderForm.component';
-
+import './order.css';
 
 
 export const Orders = () => {
@@ -24,7 +24,7 @@ export const Orders = () => {
     // }
 
     // useEffect(() => {
-        
+
     // }, [orders]);
 
     const deleteOrder = async (e) => {
@@ -117,19 +117,30 @@ export const Orders = () => {
                 break;
         }
     }
-
+const types= [{name: "ללא מיון", value: "normal"}, {name: "שם הלקוח", value: "name"}, {name: "תאריך", value: "date"}]
     return (
         <div width={'100%'}>
-            {orders ? <div>{orders.map(m => <li key={m.id} id={m.id}>{m.type},{m.startTime},  {m.customerDetails.firstName} {m.customerDetails.lastName}
-                <button key={m.id} id={m.id} onClick={(e) => deleteOrder(e)}>❌</button>
-                <button id={m.id} onClick={() => updateOrAddMeetingBtn(m)}>עדכון</button>
-            </li>)}</div> : <h1 color="black" >hello world </h1>}
-            <button onClick={e => updateOrAddMeetingBtn(null)}>להוספת פגישה</button>
-            {formUpdateMeeting ? <OrderForm objUpdate={meetingId} updateMeeting={updateMeeting} addMeeting={addMeeting} /> : ''}
-            <select onChange={(e) => { setSort(e.target.value); sortOrders(e.target.value) }}>מיון
-            <option value="normal" >רגיל </option>
+             
+                        <label htmlFor="">מיון:</label>
+                         <select onChange={(e) => { setSort(e.target.value); sortOrders(e.target.value) }}>מיון
+                <option value="normal" >ללא מיון </option>
                 <option value="name" >שם הלקוח</option>
                 <option value="date">תאריך</option>
             </select>
+            {orders ? <div>{orders.map(m => <li key={m.id} id={m.id} className="li">
+                <div> שם המזמין: {m.customerDetails.firstName} {m.customerDetails.lastName} 
+                <br/>
+                      סוג השירות: {m.type} | משעה: {m.startTime} | במשך: {m.duration}
+                      <br />
+
+                    בתאריך: {m.date}                                    
+                    
+                </div>
+                <button key={m.id} id={m.id} onClick={(e) => deleteOrder(e)}>❌</button>
+                    <button id={m.id} onClick={() => updateOrAddMeetingBtn(m)}>עדכון</button>
+            </li>)}</div> : <h1 color="black" >hello world </h1>}
+            <button onClick={e => updateOrAddMeetingBtn(null)}>להוספת פגישה</button>
+            {formUpdateMeeting ? <OrderForm objUpdate={meetingId} updateMeeting={updateMeeting} addMeeting={addMeeting} /> : ''}
+           
         </div>)
 }
