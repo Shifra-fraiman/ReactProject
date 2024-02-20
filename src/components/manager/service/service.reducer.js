@@ -16,6 +16,17 @@ export const serviceReducer = (services, action) => {
             }
             return service;
         });
+        case 'save':
+            return services.map(service => {
+                if (service.id === action.id) {
+                    return {
+                        ...service,
+                        edit: false,
+                        service: action.newService,
+                    }
+                }
+                return service;
+            })
         default:
             return services;
     }
