@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useReducer } from "react";
 import { getServiceses, getServiceById, updateServiceById, createService, deleteServiceById } from "../../../service/service.api.js";
-import chalake from '../../../assets/images/service/chalake.jpg';
-import newBorn from '../../../assets/images/service/newBorn.jpg';
+// import chalake from '../../../assets/images/service/chalake.jpg';
+// import newBorn from '../../../assets/images/service/newBorn.jpg';
 // import { serviceReducer } from "./service/service.reducer.js";
 import { useServices } from './service.context.jsx';
 import { ServiceForm } from "./serviceForm.component.jsx";
 import { Navigate } from "react-router-dom";
+import './service.css';
 
 export const Service = () => {
     // let [dataService, setDataService] = useState(null);
@@ -14,8 +15,6 @@ export const Service = () => {
     let [serviceId, setServiceId] = useState(false);
     let [service, setService] = useState(null);
     const { services, dispatch, loadServices } = useServices();
-
-
 
     //להצגת התמונה אחרי העלאה
     const [file, setFile] = useState();
@@ -78,7 +77,7 @@ export const Service = () => {
             "business_id": "8f571327-fd44-4f0f-b0f9-950082e0ced3",
             "service": {
                 "name": data.name,
-                "img": "../../assets/images/service/" + data.img.name,
+                "img": "src/assets/images/" + data.img.name,
                 "cost": data.cost,
                 "duration": data.duration
             }
@@ -101,13 +100,13 @@ export const Service = () => {
 
     return <div>
 
-        {services ? <div>{services.map(service => <li key={service.id}> {service.name}
-            <img src={service.img == "chalake" ? chalake : newBorn} width={'20%'}></img>
+        {services ? <div className="photo-card">{services.map(service => <li key={service.id} className="photo-details"> {service.name}
+            {/* <img src={service.img == "chalake" ? chalake : newBorn} width={'20%'}></img> */}
             <button type="button" key={service.id} id={service.id} onClick={() => { getErviceId(service);/*setBtnUpdateService(!BtnUpdateService)*/ }}>עידכון</button>
             <button id={service.id} onClick={() => deleteService(service)}>❌</button>
             {service.edit && <ServiceForm serviseObj={service} onsubmit={updateService} handleChange={handleChange} />}
         </li>)}</div> :
-            <h1 color="black" >hello world </h1>}
+            <h1 color="black" >טוען נתונים...</h1>}
         <button onClick={() => setBtnAddService(!btnAddService)}>להוספת שירות חדש</button>
         {btnAddService ? <ServiceForm onsubmit={addService} handleChange={handleChange} /> : ''}
         {BtnUpdateService ? <ServiceForm serviseObj={service} onsubmit={updateService} handleChange={handleChange} /> : ''}

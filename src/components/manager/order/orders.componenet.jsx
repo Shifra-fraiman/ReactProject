@@ -138,7 +138,7 @@ const types= [{name: "ללא מיון", value: "normal"}, {name: "שם הלקו�
                 </div>
                 <button key={m.id} id={m.id} onClick={(e) => deleteOrder(e)}>❌</button>
                     <button id={m.id} onClick={() => updateOrAddMeetingBtn(m)}>עדכון</button>
-            </li>)}</div> : <h1 color="black" >hello world </h1>}
+            </li>)}</div> : <h1 color="black" >טוען נתונים...</h1>}
             <button onClick={e => updateOrAddMeetingBtn(null)}>להוספת פגישה</button>
             {formUpdateMeeting ? <OrderForm objUpdate={meetingId} updateMeeting={updateMeeting} addMeeting={addMeeting} /> : ''}
            

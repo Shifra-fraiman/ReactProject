@@ -1,0 +1,21 @@
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: center;
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+}
+h1{
+    color: rgb(87, 87, 86);
+}
