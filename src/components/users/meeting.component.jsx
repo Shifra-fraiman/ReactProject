@@ -28,8 +28,8 @@ export const Meeting=()=>{
       </div>
         {/* dataService? 
          dataService.map{} <h1> { dataService[0].name }</h1> : <h1 color="black" >hello world </h1>}*/}
-        <button >
+        {/* <button >
             <Link to={'/meeting/form'}>ניסוי- להזמנה</Link>
-        </button>
+        </button> */}
     </div>)
 }

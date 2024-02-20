@@ -13,9 +13,9 @@ export const OrderForm = (props) => {
 
 
     return <form name="orderMeeting" onSubmit={e => update ? props.updateMeeting(e,oldMeeting.id) : props.addMeeting(e)}>
-        <div>
-            <img src="src/assets/images/newBorn.JPG" /*src="{service? service.img :''}*/></img>
-        </div>
+        {/* <div>
+            <img src="src/assets/images/newBorn.JPG" ></img>
+        </div> */}
         <div>
             <label >שם פרטי:
                 <input type="text" defaultValue={update ? oldMeeting ? oldMeeting.customerDetails.firstName : '' : ''} name="firstName"></input></label>

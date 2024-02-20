@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getMyBussines } from "../../service/bussines.api";
 import { updateMyBussines } from "../../service/bussines.api";
+import './details.css'
 
 
 export const Details = () => {
