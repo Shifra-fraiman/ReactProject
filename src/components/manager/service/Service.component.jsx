@@ -33,7 +33,7 @@ export const Service = () => {
             "business_id": "8f571327-fd44-4f0f-b0f9-950082e0ced3",
             "name": data.name,
             "service": {
-                "img": "../../assets/images/service/" + data.img.name,
+                "img": "src/assets/images/" + data.img.name,
                 "cost": data.cost,
                 "duration": data.duration
             }

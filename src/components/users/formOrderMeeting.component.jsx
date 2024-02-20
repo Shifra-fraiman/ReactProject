@@ -1,16 +1,32 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
-import { getServiceById } from "../../service/service.api.js";
+import { getServiceById, getServiceses } from "../../service/service.api.js";
 import { createMeeting } from "../../service/meeting.api.js";
+import TextField from '@mui/material/TextField';
+import './formOrder.css';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import Box from '@mui/material/Box';
+import dayjs from 'dayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberInput';
 
 
+
+// import { makeStyles } from "@material-ui/core/styles";
 
 
 export const FormOrderMeeting = () => {
         let { id } = useParams();
         let [service, setService] = useState(null);
         const [password, setPassword] = useState('');
+        let [allServices, setAllServices] = useState('');
 
 
         const navigate = useNavigate();
@@ -25,6 +41,10 @@ export const FormOrderMeeting = () => {
                 const { data } = serviceData;
                 console.log(data);
                 setService(data);
+
+                //allServices
+                const allServiceses = await getServiceses();
+                setAllServices(allServiceses.data);
         }
 
         useEffect(() => {
@@ -48,7 +68,7 @@ export const FormOrderMeeting = () => {
                 return newPassword;
         }
 
-        const order = async(event) => {
+        const order = async (event) => {
                 event.preventDefault();
                 const form = event.target;
                 const data = Object.fromEntries([...(new FormData(form)).entries()]);
@@ -101,57 +121,65 @@ export const FormOrderMeeting = () => {
         }
 
 
+        const theme = {
+                spacing: 8,
+        }
 
+        return <>
+                <form name="orderMeeting" onSubmit={e => order(e)}>
+                        <Box sx={{ mx: 'auto' }}>
+                                <Autocomplete
+                                        disablePortal
+                                        id="combo-box-demo"
+                                        options={allServices ? allServices.map(s => s.name) : ''}
+                                        sx={{ mx: 'auto', width: 200, mt: 2, mb: 2 }}
+                                        renderInput={(params) => <TextField {...params} label={service ? service.name : ''} />}
+                                />
+                        </Box>
+                        <br />
+                        <br />
+                        {/* <Box sx={{ borderColor: 'Primary.main' }}> */}
+                        <TextField id="outlined-basic" label="שם פרטי" name="firstName" variant="outlined" margin="2px" />
+                        <br />
+                        <br />
+                        <TextField id="outlined-basic" label="שם משפחה" name="lastName" variant="outlined" margin="2px" />
+                        <br />
+                        <br />
+                        <TextField id="outlined-basic" label="טלפון" variant="outlined" type="tel" name="phone" margin="2px" />
+                        <br />
+                        <br />
+                        <TextField id="outlined-basic" label="מיקום" name="place" variant="outlined" margin="2px" />
+                        {/* </Box> */}
 
-        return <form name="orderMeeting" onSubmit={e => order(e)}>
-                <div>
-                        <img src={service? service.img : 'src/assets/images/logo1.jpg' } ></img>
-                </div>
-                <div>
-                        <label >שם פרטי:
-                                <input type="text" name="firstName"></input></label>
+                        <Box sx={{ mx: 'auto', width: 200 }}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ m: -2 }}>
+                                        <DemoItem label="בחר תאריך" sx={{ ml: '-20%' }} >
+                                                <DesktopDatePicker />
+                                        </DemoItem>
+                                </LocalizationProvider>
+                        </Box>
+                        <Box sx={{ mx: 'auto', width: 200 }}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DemoContainer components={['TimePicker', 'DateTimePicker']}>
+                                                <DemoItem label="זמן (התחלה)">
+                                                        <TimePicker />
+                                                </DemoItem>
 
-                </div>
-                <div>
-                        <label >שם משפחה:
-                                <input type="text" name="lastName"></input></label>
-
-                </div>
-                <div>
-                        <label >טלפון:
-                                <input type="tel" name="phone"></input></label>
-
-                </div>
-                <div>
-                        <label >מיקום:
-                                <input type="text" name="place"></input>
-                        </label>
-
-                </div>
-                <div>
-                        <label>בחר תאריך:
-                                <input type="date" name="date"></input>
-                        </label>
-
-                </div>
-                <div>
-                        <label >בחר שעת התחלה:
-                                <input type="time" name="time"></input>
-                        </label>
-
-                </div>
-                <div>
-                        <label >משך זמן - בשעות:
-                                <input type="number" name="duration"></input>
-                        </label>
-
-                </div>
-                <div>
-                        <label >האם אתה רוצה להיכנס לרשימת הלקוחות?
-                                <input type="checkbox" name="customer"></input>
-                        </label>
-                </div>
-                <button type="submit" >אישור ושליחה</button>
-        </form>
+                                        </DemoContainer>
+                                </LocalizationProvider>
+                        </Box>
+                        <br />
+                        <br />
+                        <TextField id="outlined-basic" label="משך זמן-בשעות" name="time" variant="outlined" margin="2px" />
+                        {/* <InputLabel shrink>Count</InputLabel> */}
+                      
+                        <div>
+                                <label >האם אתה רוצה להיכנס לרשימת הלקוחות?
+                                        <input type="checkbox" name="customer"></input>
+                                </label>
+                        </div>
+                        <button type="submit" >אישור ושליחה</button>
+                </form >
+        </>
 
 }
