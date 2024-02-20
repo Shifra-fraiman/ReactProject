@@ -86,6 +86,11 @@ export const Service = () => {
         setBtnUpdateService(false);
         await updateServiceById(service.id, newService);
         await loadServices();
+        await  dispatch({
+            type: 'save',
+            id: service.id,
+            newService,
+        })
 
 
     }
@@ -105,8 +110,8 @@ export const Service = () => {
             <button type="button" key={service.id} id={service.id} onClick={() => { getErviceId(service);/*setBtnUpdateService(!BtnUpdateService)*/ }}>עידכון</button>
             <button id={service.id} onClick={() => deleteService(service)}>❌</button>
             {service.edit && <ServiceForm serviseObj={service} onsubmit={updateService} handleChange={handleChange} />}
-        </li>)}</div> :
-            <h1 color="black" >טוען נתונים...</h1>}
+            {!service.edit && ''}
+        </li>)}</div> : <h1 color="black" >טוען נתונים...</h1>}
         <button onClick={() => setBtnAddService(!btnAddService)}>להוספת שירות חדש</button>
         {btnAddService ? <ServiceForm onsubmit={addService} handleChange={handleChange} /> : ''}
         {BtnUpdateService ? <ServiceForm serviseObj={service} onsubmit={updateService} handleChange={handleChange} /> : ''}
