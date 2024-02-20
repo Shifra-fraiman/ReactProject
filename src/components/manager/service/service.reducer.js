@@ -6,8 +6,16 @@ export const serviceReducer = (services, action) => {
         case 'load': {
             return action.value;
         }
-       
-
+       case 'edit':
+        return services.map(service => {
+            if (service.id === action.id) {
+                return {
+                    ...service,
+                    edit: true,
+                }
+            }
+            return service;
+        });
         default:
             return services;
     }

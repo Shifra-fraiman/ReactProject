@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getMeeting, deleteMeetingById, getMeetingById, createMeeting, } from "../../../service/meeting.api";
+import { getMeeting, deleteMeetingById, getMeetingById, createMeeting, updateMeetingById} from "../../../service/meeting.api";
 import { useNavigate } from 'react-router-dom';
 import { useOrders } from "./order.context";
 import { OrderForm } from './orderForm.component';
@@ -32,6 +32,7 @@ export const Orders = () => {
         // id = e.target.id;
 
         // console.log("id" + id);
+        setFormUpdateMeetring(false);
         await deleteMeetingById(e.target.id);
         await loadOrders();
         //deleteMeetingById(id);
@@ -82,9 +83,10 @@ export const Orders = () => {
                 }
             }
         }
-        await updateMeeting(id, meeting);
+        await updateMeetingById(id, meeting);
         await loadOrders();
         form.reset();
+        setFormUpdateMeetring(false);
     }
 
 

@@ -4,6 +4,8 @@ import chalake from '../../../assets/images/service/chalake.jpg';
 import newBorn from '../../../assets/images/service/newBorn.jpg';
 // import { serviceReducer } from "./service/service.reducer.js";
 import { useServices } from './service.context.jsx';
+import { ServiceForm } from "./serviceForm.component.jsx";
+import { Navigate } from "react-router-dom";
 
 export const Service = () => {
     // let [dataService, setDataService] = useState(null);
@@ -11,7 +13,6 @@ export const Service = () => {
     let [BtnUpdateService, setBtnUpdateService] = useState(false);
     let [serviceId, setServiceId] = useState(false);
     let [service, setService] = useState(null);
-
     const { services, dispatch, loadServices } = useServices();
 
 
@@ -23,7 +24,7 @@ export const Service = () => {
         setFile(URL.createObjectURL(e.target.files[0]));
     }
 
-    const addService =async (e) => {
+    const addService = async (e) => {
         e.preventDefault();
         const form = e.target;
         const data = Object.fromEntries([...(new FormData(form)).entries()]);
@@ -32,7 +33,7 @@ export const Service = () => {
             "business_id": "8f571327-fd44-4f0f-b0f9-950082e0ced3",
             "name": data.name,
             "service": {
-                "img": "../../assets/images/service/" + data.img.name,
+                "img": "src/assets/images/" + data.img.name,
                 "cost": data.cost,
                 "duration": data.duration
             }
@@ -41,27 +42,31 @@ export const Service = () => {
         await createService(service);
         form.reset();
         setBtnAddService(false);
-       
+
         await loadServices();
     }
 
-    const getErviceId = async (e) => {
-        console.log(e);
-        e.preventDefault();
-        console.log(e.target);
+    const getErviceId = (service) => {
+        // console.log(e);
+        // e.preventDefault();
+        // console.log(e.target);
 
-        if (e.target != undefined) {
-            console.log(`e.target.id: ${e.target.id}`);
-            console.log(`e.target: ${e.target}`);
-            const serviceData = await getServiceById(e.target.id);
-            const { data } = serviceData;
-            setService(data);
-        }
+        // if (e.target != undefined) {
+        //     console.log(`e.target.id: ${e.target.id}`);
+        //     console.log(`e.target: ${e.target}`);
+        //     const serviceData = await getServiceById(e.target.id);
+        //     const { data } = serviceData;
+        //     setService(data);
+        // }
+        //  setService(service);
         setBtnUpdateService(true);
-
+        dispatch({
+            type: 'edit',
+            id: service.id,
+        })
     }
 
-    const updateService = async (e) => {
+    const updateService = async (e, service) => {
         console.log("I in update");
         e.preventDefault();
         const form = e.target;
@@ -83,9 +88,9 @@ export const Service = () => {
         await updateServiceById(service.id, newService);
         await loadServices();
 
-        
+
     }
-    
+
     const deleteService = async (service) => {
         await deleteServiceById(service.id);
         await loadServices();
@@ -95,40 +100,16 @@ export const Service = () => {
 
 
     return <div>
-      
+
         {services ? <div>{services.map(service => <li key={service.id}> {service.name}
             <img src={service.img == "chalake" ? chalake : newBorn} width={'20%'}></img>
-            <button type="button" key={service.id} id={service.id} onClick={(e) => { getErviceId(e); }}>עידכון</button>
-            <button id={service.id} onClick={() => deleteService(service)}>❌</button> </li>)}</div> :
+            <button type="button" key={service.id} id={service.id} onClick={() => { getErviceId(service);/*setBtnUpdateService(!BtnUpdateService)*/ }}>עידכון</button>
+            <button id={service.id} onClick={() => deleteService(service)}>❌</button>
+            {service.edit && <ServiceForm serviseObj={service} onsubmit={updateService} handleChange={handleChange} />}
+        </li>)}</div> :
             <h1 color="black" >hello world </h1>}
         <button onClick={() => setBtnAddService(!btnAddService)}>להוספת שירות חדש</button>
-        {
-            btnAddService || BtnUpdateService ? <div><form name="orderMeeting" onSubmit={e => btnAddService? addService(e) : updateService(e)}>
-                <div>
-                    <label >שם השירות:
-                        <input type="text" name="name" defaultValue={BtnUpdateService? (service!=null)?service.name :'':'' }></input></label>
-
-                </div>
-                <div>
-                    <label >משך זמן:
-                        <input type="text" name="duration" defaultValue={BtnUpdateService? (service!=null)?service.duration :'':'' }></input></label>
-
-                </div>
-                <div>
-                    <label >מחיר:
-                        <input type="text" name="cost" defaultValue={BtnUpdateService? (service!=null)?service.cost :'' :'' }></input></label>
-
-                </div>
-                <div>
-                    <label >קישור לתמונה:
-                        <input type="file" accept="image/*" onChange={handleChange} name="img"></input></label>
-                    <img src={file} width={'40%'} />
-
-                </div>
-                <button type="submit" >אישור ושליחה</button>
-            </form>
-            </div> : ''
-        }
-        
+        {btnAddService ? <ServiceForm onsubmit={addService} handleChange={handleChange} /> : ''}
+        {BtnUpdateService ? <ServiceForm serviseObj={service} onsubmit={updateService} handleChange={handleChange} /> : ''}
     </div>
 }
