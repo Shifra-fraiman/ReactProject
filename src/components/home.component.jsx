@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { getMyBussines } from '../service/bussines.api';
 import Popup from 'reactjs-popup';
 import './home.css';
+// import advertising from '../assets/images/advertising.jpg';
 
 export const Home = () => {
     const [dataMyBusiness, setDataMyBusiness] = useState("");
@@ -71,6 +72,7 @@ export const Home = () => {
             <p>{(dataMyBusiness != undefined) ? (dataMyBusiness.contact != undefined) ? dataMyBusiness.contact.mail : '' : ''}</p>
             <p>{(dataMyBusiness != undefined) ? (dataMyBusiness.contact != undefined) ? dataMyBusiness.contact.website : '' : ''}</p>
         </div>
+        {/* <img src={advertising}/> */}
     </div>
 
 }

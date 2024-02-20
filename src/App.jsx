@@ -27,7 +27,7 @@ function App() {
             <Link to={'/meeting'}>הזמנה</Link>
           </li>
           <li className='LinkNav'>
-            <Link to={'/about'}>אודות</Link>
+            <Link to={'/gallery'}>גלריה</Link>
           </li>
          </ul>
       </nav>
