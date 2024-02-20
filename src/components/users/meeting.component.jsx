@@ -1,35 +1,45 @@
 import React, { useEffect, useState } from "react";
 //import { createMeeting } from '../../service/api.js'
 import { getServiceses } from "../../service/service.api.js";
-import { Outlet, Link, useParams} from "react-router-dom";
-import { FormOrderMeeting } from './formOrderMeeting.component.jsx'
+import { Outlet, Link } from "react-router-dom";
+// import { FormOrderMeeting } from './formOrderMeeting.component.jsx'
+import './meeting.css'
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
 
-export const Meeting=()=>{
-    let [dataService, setDataService]=useState(null);
+export const Meeting = () => {
+    let [dataService, setDataService] = useState(null);
 
-    
-    const getAllServices= async()=>{
-        const services= await getServiceses();
+
+    const getAllServices = async () => {
+        const services = await getServiceses();
         //const data= await JSON.parse(services);
         //const data= await services.json();
-        const { data } =services;
+        const { data } = services;
         setDataService(data);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getAllServices();
     }, [],);
 
-    return (<div width={'100%'}> 
-        
-        {dataService? <div>{dataService.map(service=> <li key={service.id} id= {service.id}> <Link to={"/meeting/form/"+service.id} >{service.name} <img src={service.img} width={'20%'}></img></Link> </li>)}</div> : <h1 color="black" >hello world </h1>}
+    return (<div width={'100%'}>
+
+        {dataService ? <div className="photo-card">{dataService.map(service =>
+            <li key={service.id} id={service.id} className="photo-details">
+                <Link to={"/meeting/form/" + service.id} className="photo-title">{service.name}
+                    <img src={service.img} width={'20%'} className="img"></img></Link><h1>____________________________</h1>
+                <h4>מחיר: {service.cost}</h4>
+                <h6>למשך: {service.duration}</h6></li>)}
+        </div> : <h1 color="black" >טוען נתונים...</h1>
+        // <Stack sx={{ color: 'rgb(212, 23, 91)' , mx: 'auto'}} spacing={2} direction="row">
+        //     <CircularProgress color="inherit" />
+        // </Stack>
+        }
         <div>
             <Outlet />
-      </div>
+        </div>
         {/* dataService? 
          dataService.map{} <h1> { dataService[0].name }</h1> : <h1 color="black" >hello world </h1>}*/}
-        <button >
-            <Link to={'/meeting/form'}>ניסוי- להזמנה</Link>
-        </button>
-    </div>)
+    </div >)
 }
