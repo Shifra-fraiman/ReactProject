@@ -1,10 +1,9 @@
-.textField{
-    border-color:  rgb(212, 23, 91) ;
-    /* //rgb(87, 87, 86) 60% 40%) */
+.textField {
+    border-color: rgb(212, 23, 91);
     color: rgb(87, 87, 86);
 }
-#outlined-basic{
-    border-color:  rgb(212, 23, 91) ;
-    /* //rgb(87, 87, 86) 60% 40%) */
+
+#outlined-basic {
+    border-color: rgb(212, 23, 91);
     color: rgb(87, 87, 86);
 }

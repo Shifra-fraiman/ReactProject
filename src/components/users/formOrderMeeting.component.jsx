@@ -19,10 +19,6 @@ import { Unstable_NumberInput as NumberInput } from '@mui/base/Unstable_NumberIn
 import { getUsers, createUser } from "../../service/user.api.js";
 
 
-
-// import { makeStyles } from "@material-ui/core/styles";
-
-
 export const FormOrderMeeting = () => {
         let { id } = useParams();
         let [service, setService] = useState(null);
@@ -30,12 +26,7 @@ export const FormOrderMeeting = () => {
         let [allServices, setAllServices] = useState('');
         let [date, setDate] = useState(new Date());
 
-
         const navigate = useNavigate();
-
-        //     let { nameMeeting }=props;
-        //     let { imgMeeting }=props;
-        console.log(id);
 
         const getService = async () => {
                 const serviceData = await getServiceById(id);
@@ -74,10 +65,6 @@ export const FormOrderMeeting = () => {
                 event.preventDefault();
                 const form = event.target;
                 const data = Object.fromEntries([...(new FormData(form)).entries()]);
-                // let d= new Date(data.date);
-                // console.log(d.toString());
-                // console.log("getMonth: "+data.date.day);
-                // console.log(d.getDay);
                 const meeting = {
                         business_id: "8f571327-fd44-4f0f-b0f9-950082e0ced3",
                         start_time: data.time,
@@ -127,10 +114,6 @@ export const FormOrderMeeting = () => {
 
         }
 
-
-        // const theme = {
-        //         spacing: 8,
-        // }
 
         return <>
                 <form name="orderMeeting" onSubmit={e => order(e)}>
