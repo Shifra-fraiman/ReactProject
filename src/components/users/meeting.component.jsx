@@ -14,8 +14,6 @@ export const Meeting = () => {
 
     const getAllServices = async () => {
         const services = await getServiceses();
-        //const data= await JSON.parse(services);
-        //const data= await services.json();
         const { data } = services;
         setDataService(data);
     }
@@ -32,17 +30,15 @@ export const Meeting = () => {
                     <img src={service.img} width={'20%'} className="img"></img></Link><h1>____________________________</h1>
                 <h4>מחיר: {service.cost}</h4>
                 <h6>למשך: {service.duration}</h6></li>)}
-        </div> :<h1 color="black" >טוען נתונים...</h1>
-        // <Box sx={{ ml: '-20%'}}>
-        // <Stack sx={{ color: 'rgb(212, 23, 91)' , mx: 'auto'}} spacing={2} direction="row">
-        //     <CircularProgress color="inherit" />
-        // </Stack>
-        // </Box>
+        </div> : <h1 color="black" >טוען נתונים...</h1>
+            // <Box sx={{ ml: '-20%'}}>
+            // <Stack sx={{ color: 'rgb(212, 23, 91)' , mx: 'auto'}} spacing={2} direction="row">
+            //     <CircularProgress color="inherit" />
+            // </Stack>
+            // </Box>
         }
         <div>
             <Outlet />
         </div>
-        {/* dataService? 
-         dataService.map{} <h1> { dataService[0].name }</h1> : <h1 color="black" >hello world </h1>}*/}
     </div >)
 }

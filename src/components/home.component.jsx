@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { getMyBussines } from '../service/bussines.api';
 import Popup from 'reactjs-popup';
 import './home.css';
-// import advertising from '../assets/images/advertising.jpg';
 
 export const Home = () => {
     const [dataMyBusiness, setDataMyBusiness] = useState("");
@@ -25,13 +24,6 @@ export const Home = () => {
 
     useEffect(() => {
         getBussines();
-        // setShowPopup(!showPopup);
-        // if (dataMyBusiness != undefined && dataMyBusiness.sale != undefined) {
-        //     let saleDateFrom = dataMyBusiness.sale.dateFrom.split('-');
-        //     saleDateFrom = new Date(saleDateFrom[0], saleDateFrom[1], saleDateFrom[2]);
-        //     console.log("saleDateFrom: " + saleDateFrom);
-        // }
-        // console.log(`${new Date().toDateString()} < ${Date.parse("2024-03-01")} = ${new Date().toDateString() < Date.parse("20-02-2024")}`);
     }, []);
 
     const offset = {
@@ -41,7 +33,7 @@ export const Home = () => {
 
 
     return <div>
-        <Popup popupClass={"popup-content"} /*offset={offset}*/ show={true} open={true}
+        <Popup popupClass={"popup-content"} show={true} open={true}
             modal nested>
             {
                 close => (
@@ -72,7 +64,6 @@ export const Home = () => {
             <p>{(dataMyBusiness != undefined) ? (dataMyBusiness.contact != undefined) ? dataMyBusiness.contact.mail : '' : ''}</p>
             <p>{(dataMyBusiness != undefined) ? (dataMyBusiness.contact != undefined) ? dataMyBusiness.contact.website : '' : ''}</p>
         </div>
-        {/* <img src={advertising}/> */}
     </div>
 
 }

@@ -18,7 +18,7 @@ function App() {
       <nav id='container_nav'>
         <ul id='nav_ul'>
           <li className='LinkNav'>
-            <Link to={''}><img src="../src/assets/images/logo2.png" id='logo'/></Link>
+            <Link to={''}><img src="../src/assets/images/logo2.png" id='logo' /></Link>
           </li>
           <li className='LinkNav'>
             <Link to={''}>בית</Link>
@@ -29,16 +29,8 @@ function App() {
           <li className='LinkNav'>
             <Link to={'/gallery'}>גלריה</Link>
           </li>
-         </ul>
+        </ul>
       </nav>
-      {/* <Navbar expand="lg" className="bg-body-tertiary">
-        <Container>
-          <Nav className="me-auto">
-            <Nav><Link to={''}>home</Link></Nav>
-            <Nav> <Link to={'/meeting'}>meeting</Link></Nav>
-          </Nav>
-        </Container>
-      </Navbar> */}
       <div>
         <Outlet />
       </div>

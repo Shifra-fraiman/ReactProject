@@ -7,35 +7,19 @@ import './order.css';
 
 
 export const Orders = () => {
-    // let [meetings, setMeetings] = useState(null);
     let [formUpdateMeeting, setFormUpdateMeetring] = useState(false);
     let [meetingId, setMeetingId] = useState(null);
     let id = null;
     const navigate = useNavigate();
     const [sort, setSort] = useState("");
-
     const { orders, dispatch, loadOrders } = useOrders();
 
-    // const getAllMeeting = async () => {
-    //     const services = await getMeeting();
-    //     const { data } = services;
-    //     console.log(data);
-    //     setMeetings(data);
-    // }
-
-    // useEffect(() => {
-
-    // }, [orders]);
 
     const deleteOrder = async (e) => {
         e.preventDefault();
-        // id = e.target.id;
-
-        // console.log("id" + id);
         setFormUpdateMeetring(false);
         await deleteMeetingById(e.target.id);
         await loadOrders();
-        //deleteMeetingById(id);
         alert("הפגישה נמחקה בהצלחה!");
     }
     const addMeeting = async (e) => {
@@ -117,30 +101,30 @@ export const Orders = () => {
                 break;
         }
     }
-const types= [{name: "ללא מיון", value: "normal"}, {name: "שם הלקוח", value: "name"}, {name: "תאריך", value: "date"}]
+    const types = [{ name: "ללא מיון", value: "normal" }, { name: "שם הלקוח", value: "name" }, { name: "תאריך", value: "date" }]
     return (
         <div width={'100%'}>
-             
-                        <label htmlFor="">מיון:</label>
-                         <select onChange={(e) => { setSort(e.target.value); sortOrders(e.target.value) }}>מיון
+
+            <label htmlFor="">מיון:</label>
+            <select onChange={(e) => { setSort(e.target.value); sortOrders(e.target.value) }}>מיון
                 <option value="normal" >ללא מיון </option>
                 <option value="name" >שם הלקוח</option>
                 <option value="date">תאריך</option>
             </select>
             {orders ? <div>{orders.map(m => <li key={m.id} id={m.id} className="li">
-                <div> שם המזמין: {m.customerDetails.firstName} {m.customerDetails.lastName} 
-                <br/>
-                      סוג השירות: {m.type} | משעה: {m.startTime} | במשך: {m.duration}
-                      <br />
+                <div> שם המזמין: {m.customerDetails.firstName} {m.customerDetails.lastName}
+                    <br />
+                    סוג השירות: {m.type} | משעה: {m.startTime} | במשך: {m.duration}
+                    <br />
 
-                    בתאריך: {m.date}                                    
-                    
+                    בתאריך: {m.date}
+
                 </div>
                 <button key={m.id} id={m.id} onClick={(e) => deleteOrder(e)}>❌</button>
-                    <button id={m.id} onClick={() => updateOrAddMeetingBtn(m)}>עדכון</button>
+                <button id={m.id} onClick={() => updateOrAddMeetingBtn(m)}>עדכון</button>
             </li>)}</div> : <h1 color="black" >טוען נתונים...</h1>}
             <button onClick={e => updateOrAddMeetingBtn(null)}>להוספת פגישה</button>
             {formUpdateMeeting ? <OrderForm objUpdate={meetingId} updateMeeting={updateMeeting} addMeeting={addMeeting} /> : ''}
-           
+
         </div>)
 }

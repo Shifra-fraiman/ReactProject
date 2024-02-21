@@ -1,15 +1,11 @@
 import React, { useEffect, useState, useReducer } from "react";
 import { getServiceses, getServiceById, updateServiceById, createService, deleteServiceById } from "../../../service/service.api.js";
-// import chalake from '../../../assets/images/service/chalake.jpg';
-// import newBorn from '../../../assets/images/service/newBorn.jpg';
-// import { serviceReducer } from "./service/service.reducer.js";
 import { useServices } from './service.context.jsx';
 import { ServiceForm } from "./serviceForm.component.jsx";
 import { Navigate } from "react-router-dom";
 import './service.css';
 
 export const Service = () => {
-    // let [dataService, setDataService] = useState(null);
     let [btnAddService, setBtnAddService] = useState(false);
     let [BtnUpdateService, setBtnUpdateService] = useState(false);
     let [serviceId, setServiceId] = useState(false);
@@ -46,18 +42,6 @@ export const Service = () => {
     }
 
     const getErviceId = (service) => {
-        // console.log(e);
-        // e.preventDefault();
-        // console.log(e.target);
-
-        // if (e.target != undefined) {
-        //     console.log(`e.target.id: ${e.target.id}`);
-        //     console.log(`e.target: ${e.target}`);
-        //     const serviceData = await getServiceById(e.target.id);
-        //     const { data } = serviceData;
-        //     setService(data);
-        // }
-        //  setService(service);
         setBtnUpdateService(true);
         dispatch({
             type: 'edit',
@@ -86,7 +70,7 @@ export const Service = () => {
         setBtnUpdateService(false);
         await updateServiceById(service.id, newService);
         await loadServices();
-        await  dispatch({
+        await dispatch({
             type: 'save',
             id: service.id,
             newService,
@@ -106,7 +90,6 @@ export const Service = () => {
     return <div>
 
         {services ? <div className="photo-card">{services.map(service => <li key={service.id} className="photo-details"> {service.name}
-            {/* <img src={service.img == "chalake" ? chalake : newBorn} width={'20%'}></img> */}
             <button type="button" key={service.id} id={service.id} onClick={() => { getErviceId(service);/*setBtnUpdateService(!BtnUpdateService)*/ }}>עידכון</button>
             <button id={service.id} onClick={() => deleteService(service)}>❌</button>
             {service.edit && <ServiceForm serviseObj={service} onsubmit={updateService} handleChange={handleChange} />}

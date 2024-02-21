@@ -10,7 +10,7 @@ export const Details = () => {
     const [description, setDescription] = useState(false);
     const [contact, setContact] = useState(false);
     const [sale, setSale] = useState(false);
-    let [descriptionInOneSentece, setDescriptionInOneSentece]= useState(null);
+    let [descriptionInOneSentece, setDescriptionInOneSentece] = useState(null);
     let business, business2;
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export const Details = () => {
         return (JSON.stringify(sentece)).slice(1, -1).split('.');
     }
 
-    
+
 
     const changeDataOfMyBusiness = (e, type) => {
         e.preventDefault();
@@ -48,7 +48,6 @@ export const Details = () => {
                 business = { ...dataMyBusiness, description: JSON.stringify(data.text) };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
-                //updateMyBussines(business2);
                 //סגירת הטופס
                 setDescription(!description);
                 break;
@@ -72,19 +71,16 @@ export const Details = () => {
                 business = { ...dataMyBusiness, contact: { "mail": data.mail, "phone": data.phone, "website": data.website }, description: descriptionInOneSentece };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
-                //updateMyBussines(business2);
-                //סגירת הטופס
                 setContact(!contact);
                 break;
             case "sale":
                 //עדכון ה - useState
-                setDataMyBusiness({ ...dataMyBusiness, sale: { "description": data.sale, "dateFrom": data.saleDateFrom ,"dateTo": data.saleDateTo } });
+                setDataMyBusiness({ ...dataMyBusiness, sale: { "description": data.sale, "dateFrom": data.saleDateFrom, "dateTo": data.saleDateTo } });
                 console.log(dataMyBusiness);
                 //עדכון ה- Node
                 business = { ...dataMyBusiness, sale: { "description": data.sale, "dateFrom": data.saleDateFrom, "dateTo": data.saleDateTo }, description: descriptionInOneSentece };
                 business2 = { business, "userId": "aaa3488f-64fb-4d36-8d98-5d483e7bce7a" }
                 console.log("business: " + business2);
-                //updateMyBussines(business2);
                 //סגירת הטופס
                 setSale(!sale);
                 break;
@@ -102,7 +98,6 @@ export const Details = () => {
         <h1 >פרטי העסק של: {dataMyBusiness.name}</h1>
         <h4>מידע שיווקי</h4>
         <div >{(dataMyBusiness != undefined) ? (dataMyBusiness.description != undefined) ? dataMyBusiness.description.map(s => <p> {s} </p>) : '' : ''} </div>
-        {/* <p>{(dataMyBusiness!= undefined)?  dataMyBusiness.description :''}</p> */}
         <button onClick={() => setDescription(!description)}>לשינוי הטקסט</button>
         {description ?
             <form action="" onSubmit={e => changeDataOfMyBusiness(e, "description")}>
